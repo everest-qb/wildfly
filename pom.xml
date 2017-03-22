@@ -135,5 +135,21 @@
             </plugins>
         </pluginManagement>
     </build>
-
+    <scm>
+    	<url>http://gitlab.localdomain/xyzqb/mavenTest</url>
+    	<connection>scm:git:http://gitlab.localdomain/xyzqb/mavenTest.git</connection>
+    	<developerConnection>scm:git:ssh://git@gitlab.localdomain:xyzqb/mavenTest.git</developerConnection>
+    </scm>
+    <distributionManagement>
+	<repository>
+		<id>maven.localdomain</id>
+		<name>maven.localdomain-releases</name>
+		<url>http://192.168.7.12:8081/artifactory/libs-release-local</url>
+	</repository>
+	<snapshotRepository>
+        <id>maven.localdomain</id>
+        <name>maven.localdomain-snapshots</name>
+        <url>http://192.168.7.12:8081/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+	</distributionManagement>
 </project>
