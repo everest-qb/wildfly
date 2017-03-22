@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @Entity
+@Table(name="sample")
 @NamedQuery(name="Sample.findAll", query="SELECT s FROM Sample s")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
