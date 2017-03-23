@@ -24,14 +24,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <url>http://wildfly.org</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
+
     <modules>
         <module>wildfly-ejb</module>
         <module>wildfly-web</module>
@@ -47,23 +40,25 @@
 
         <!-- JBoss dependency versions -->
         
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>1.1.0.Final</version.wildfly.maven.plugin>
 
         <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
-        <version.jboss.bom>8.2.1.Final</version.jboss.bom>
-        <version.wildfly>9.0.0.Alpha1</version.wildfly>
-
+        <version.jboss.bom>8.2.2.Final</version.jboss.bom>
+        <version.wildfly>1.0.4.Final</version.wildfly>
+        <!-- 9.0.0.Alpha1 -->
 
         <!-- other plugin versions -->
-        <version.compiler.plugin>3.1</version.compiler.plugin>
+        <version.compiler.plugin>3.5.1</version.compiler.plugin>
         <version.ear.plugin>2.10</version.ear.plugin>
         <version.ejb.plugin>2.3</version.ejb.plugin>
-        <version.surefire.plugin>2.16</version.surefire.plugin>
+        <version.surefire.plugin>2.18.1</version.surefire.plugin>
         <version.war.plugin>2.5</version.war.plugin>
+        <version.arquillian.bom>1.1.12.Final</version.arquillian.bom>
 
         <!-- maven-compiler-plugin -->
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        
     </properties>
 
     <dependencyManagement>
@@ -112,12 +107,26 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+            	<groupId>org.jboss.arquillian</groupId>
+            	<artifactId>arquillian-bom</artifactId>
+            	<version>${version.arquillian.bom}</version>
+            	<type>pom</type>
+            	<scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+            		
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>				
+			</plugin>			
+		
+            
                 <!-- The WildFly plugin deploys your ear to a local JBoss
                     AS container -->
                 <!-- Due to Maven's lack of intelligence with EARs we need 

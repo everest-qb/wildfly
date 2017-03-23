@@ -30,15 +30,6 @@
 
     <name>wildfly: EJB Module</name>
 
-    <url>http://wildfly.org</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
-
     <dependencies>
 
         <!-- Declare the APIs we depend on and need for compilation. All of 
@@ -129,12 +120,49 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${version.surefire.plugin}</version>
                         <configuration>
-                            <skip>true</skip>
-                        </configuration>
+                            <skip>true</skip>                                                      
+                        </configuration>                        
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
+		<profile>
+			<id>arq-wildfly-embedded</id>
+			<build>
+				<plugins>
+					<plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                        	<systemPropertyVariables>
+                        		<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    		</systemPropertyVariables>                                                    
+                        </configuration>                        
+                    </plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+  					<groupId>org.wildfly.arquillian</groupId>
+  					<artifactId>wildfly-arquillian-container-embedded</artifactId>  	
+  					<version>2.0.2.Final</version>				
+  					<scope>test</scope>
+				</dependency>
+				<dependency>
+    				<groupId>org.wildfly.core</groupId>
+    				<artifactId>wildfly-embedded</artifactId>
+    				<version>2.2.0.Final</version>
+    				<scope>test</scope>
+				</dependency>	
+				<dependency>
+    				<groupId>org.jboss.logging</groupId>
+    				<artifactId>jboss-logging</artifactId>
+    				<version>3.3.1.Final</version>
+    				<scope>test</scope>
+				</dependency>					
+			</dependencies>
+		</profile>
 
         <profile>
             <!-- An optional Arquillian testing profile that executes tests 
@@ -142,12 +170,18 @@
             <!-- This profile will start a new WildFly instance, and execute
                 the test, shutting it down when done -->
             <!-- Run with: mvn clean test -Parq-wildfly-managed -->
-            <id>arq-wildfly-managed</id>
+            <id>arq-wildfly-managed</id>           
             <dependencies>
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
                     <scope>test</scope>
+                    <exclusions>
+						<exclusion>
+							<groupId>sun.jdk</groupId>
+							<artifactId>jconsole</artifactId>
+						</exclusion>
+    				</exclusions>
                 </dependency>
             </dependencies>
         </profile>
@@ -156,7 +190,7 @@
             <!-- An optional Arquillian testing profile that executes tests 
                 in a remote WildFly instance -->
             <!-- Run with: mvn clean test -Parq-wildfly-remote -->
-            <id>arq-wildfly-remote</id>
+            <id>arq-wildfly-remote</id>           
             <dependencies>
                 <dependency>
                     <groupId>org.wildfly</groupId>
