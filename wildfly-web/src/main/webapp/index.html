@@ -5,6 +5,11 @@
 <title>Test</title>
 </head>
 <body>
-TEST
+<form method="POST" enctype="multipart/form-data" action="http://dev02.localdomain:8080/wildfly-web/Upload">
+  File to upload: <input type="file" name="upfile"><br/>
+  Notes about the file: <input type="text" name="note"><br/>
+  <br/>
+  <input type="submit" value="Press"> to upload the file!
+</form>
 </body>
 </html>
